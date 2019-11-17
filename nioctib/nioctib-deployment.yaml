@@ -1,0 +1,93 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: nioctib-tech
+  name: nioctib-tech
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nioctib-tech
+  template:
+    metadata:
+      labels:
+        app: nioctib-tech
+      name: nioctib-tech
+    spec:
+      containers:
+      - args:
+        env:
+        - name: JAVA_OPTS
+          value: -Xms256m -Xmx3072m
+        image: liuhongchao/bitcoin4s:68a2df818224668d9ad100a6ec1352ce32185fc7
+        imagePullPolicy: Always
+        name: nioctib-tech
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /api/ping
+            port: 8888
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 10
+        readinessProbe:
+          failureThreshold: 30
+          httpGet:
+            path: /api/ping
+            port: 8888
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 1
+          successThreshold: 1
+          timeoutSeconds: 10
+#        resources:
+#          limits:
+#            cpu: "1"
+#            memory: 3G
+#          requests:
+#            memory: 1500M
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext:
+        runAsUser: 0
+      terminationGracePeriodSeconds: 30
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nioctib-tech
+spec:
+  selector:
+    app: nioctib-tech
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8888
+  type: LoadBalancer
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: nioctib-tech-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/issuer: "letsencrypt-prod"
+spec:
+  tls:
+  - hosts:
+    - softfork.it
+    secretName: softfork-it-tls
+  rules:
+  - host: softfork.it
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: nioctib-tech
+          servicePort: 80
