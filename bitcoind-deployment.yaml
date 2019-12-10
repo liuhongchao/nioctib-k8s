@@ -20,6 +20,10 @@ spec:
         env:
         - name: JAVA_OPTS
           value: -Xms256m -Xmx3072m
+        - name: BITCOIN_EXTRA_ARGS
+          # password: 7Rq@s4%7WmDS
+          # rpcauth generated using: ./rpcauth.py h0ngchao 7Rq@s4%7WmDS
+          value: "rpcauth=h0ngcha0:65983086d4a91fbd309be6d5ed260348$8285069f409b6962315cab117661bf8e330f3c885465cb07ad2a826a182a554b\ntxindex=1"
         image: nicolasdorier/docker-bitcoin:0.18.1
         imagePullPolicy: Always
         name: bitcoind
