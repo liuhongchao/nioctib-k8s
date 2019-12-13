@@ -1,5 +1,4 @@
 bases:
   - cert-manager
   - ingress-nginx
-resources:
-  - bitcoind-deployment.yaml
+  - bitcoind
