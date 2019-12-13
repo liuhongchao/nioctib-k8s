@@ -1,0 +1,3 @@
+resources:
+  - mandatory.yaml
+  - cloud-generic.yaml
