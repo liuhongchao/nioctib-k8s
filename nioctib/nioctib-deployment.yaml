@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
@@ -69,9 +69,9 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 8888
-  type: LoadBalancer
+  type: ClusterIP
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: nioctib-tech-ingress
@@ -81,17 +81,9 @@ metadata:
 spec:
   tls:
   - hosts:
-    - softfork.it
     - nioctib.tech
-    secretName: softfork-it-tls
+    secretName: nioctib-tech-it-tls
   rules:
-  - host: softfork.it
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: nioctib-tech
-          servicePort: 80
   - host: nioctib.tech
     http:
       paths:
