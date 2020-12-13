@@ -20,7 +20,7 @@ spec:
         env:
         - name: JAVA_OPTS
           value: -Xms256m -Xmx3072m
-        image: liuhongchao/bitcoin4s:latest
+        image: liuhongchao/bitcoin4s:92b9aac9312f968dde88cd32863255555065f954
         imagePullPolicy: Always
         name: nioctib-tech
         livenessProbe:
