@@ -1,1 +1,1 @@
-K8S deployment for https://nioctib.tech
+K8S deployment for https://nioctib.tech and https://explorer.nioctib.tech using [FluxCD](https://fluxcd.io/).
