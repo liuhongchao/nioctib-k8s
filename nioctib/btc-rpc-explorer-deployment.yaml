@@ -27,7 +27,7 @@ spec:
         - name: BTCEXP_BITCOIND_PASS
           value: h0ngcha0
         - name: BTCEXP_BASIC_AUTH_PASSWORD
-          value: 12345
+          value: "12345"
         image: liuhongchao/btc-rpc-explorer:latest
         imagePullPolicy: Always
         name: btc-rpc-explorer
