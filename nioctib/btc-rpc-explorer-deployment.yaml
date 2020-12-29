@@ -18,7 +18,7 @@ spec:
       containers:
       - args:
         env:
-        - name: BTCEXP_HOST
+        - name: BTCEXP_BITCOIND_HOST
           value: bitcoind
         - name: BTCEXP_BITCOIND_USER
           value: h0ngcha0
@@ -27,12 +27,6 @@ spec:
         image: liuhongchao/btc-rpc-explorer:latest
         imagePullPolicy: Always
         name: btc-rpc-explorer
-#        resources:
-#          limits:
-#            cpu: "1"
-#            memory: 3G
-#          requests:
-#            memory: 1500M
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
       dnsPolicy: ClusterFirst
