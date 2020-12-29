@@ -67,5 +67,5 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: btc-rpc-explorer
-          servicePort: 3002
+          serviceName: nioctib-tech
+          servicePort: 80
