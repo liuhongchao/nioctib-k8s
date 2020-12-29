@@ -45,6 +45,27 @@ spec:
     app: btc-rpc-explorer
   ports:
     - protocol: TCP
-      port: 80
+      port: 3002
       targetPort: 3002
   type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: explorer-nioctib-tech-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/issuer: "letsencrypt-prod"
+spec:
+  tls:
+  - hosts:
+    - explorer.nioctib.tech
+    secretName: explorer-nioctib-tech-it-tls
+  rules:
+  - host: explorer.nioctib.tech
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: btc-rpc-explorer
+          servicePort: 3002
