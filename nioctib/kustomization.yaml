@@ -3,3 +3,4 @@ resources:
   - production-issuer.yaml
   - staging-issuer.yaml
   - nioctib-deployment.yaml
+  - btc-rpc-explorer-deployment.yaml
