@@ -18,6 +18,8 @@ spec:
       containers:
       - args:
         env:
+        - name: BTCEXP_HOST
+          value: 0.0.0.0
         - name: BTCEXP_BITCOIND_HOST
           value: bitcoind
         - name: BTCEXP_BITCOIND_USER
@@ -67,5 +69,5 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: nioctib-tech
-          servicePort: 80
+          serviceName: btc-rpc-explorer
+          servicePort: 3002
