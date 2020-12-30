@@ -3,4 +3,5 @@ resources:
   - production-issuer.yaml
   - staging-issuer.yaml
   - nioctib-deployment.yaml
+  - bitcoind-password-secret.yaml
   - btc-rpc-explorer-deployment.yaml
