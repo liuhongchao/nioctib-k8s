@@ -29,7 +29,6 @@ spec:
             secretKeyRef:
               name: bitcoind-password-secret
               key: password
-          value: h0ngcha0
         image: liuhongchao/btc-rpc-explorer:latest
         imagePullPolicy: Always
         name: btc-rpc-explorer
