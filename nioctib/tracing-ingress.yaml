@@ -1,0 +1,31 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: tracing-nioctib-tech-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/issuer: "letsencrypt-prod"
+spec:
+  tls:
+  - hosts:
+    - tracing.nioctib.tech
+    secretName: tracing-nioctib-tech-it-tls
+  rules:
+  - host: tracing.nioctib.tech
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: tracing
+          servicePort: 80
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: tracing
+  namespace: istio-system
+spec:
+  type: ExternalName
+  externalName: tracing.istio-system.svc.cluster.local
+  ports:
+    - port: 80
