@@ -1,5 +1,6 @@
 namespace: bitcoin
 resources:
+  - bitcoin-namespace.yaml
   - production-issuer.yaml
   - staging-issuer.yaml
   - nioctib-deployment.yaml
