@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   labels:
     app: btc-rpc-explorer
+    version: latest
   name: btc-rpc-explorer
 spec:
   replicas: 1

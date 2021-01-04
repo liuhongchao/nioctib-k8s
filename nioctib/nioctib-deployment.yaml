@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   labels:
     app: nioctib-tech
+    version: latest
   name: nioctib-tech
 spec:
   replicas: 1
