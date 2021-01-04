@@ -16,5 +16,16 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: kiali.istio-system.svc.cluster.local
+          serviceName: kiali
           servicePort: 20001
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: kiali
+  namespace: istio-system
+spec:
+  type: ExternalName
+  externalName: kiali.istio-system.svc.cluster.local
+  ports:
+    - port: 20001
