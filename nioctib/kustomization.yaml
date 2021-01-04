@@ -6,3 +6,4 @@ resources:
   - nioctib-deployment.yaml
   - bitcoind-password-secret.enc.yaml
   - btc-rpc-explorer-deployment.yaml
+  - kiali-ingress.yaml
