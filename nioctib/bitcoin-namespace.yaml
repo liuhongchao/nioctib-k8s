@@ -3,5 +3,5 @@ kind: Namespace
 metadata:
   labels:
     name: bitcoin
-    istio-injection: enabled
+    istio-injection: disabled
   name: bitcoin
