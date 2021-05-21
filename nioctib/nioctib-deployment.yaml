@@ -92,3 +92,7 @@ spec:
         backend:
           serviceName: nioctib-tech
           servicePort: 80
+      - path: /alephium
+        backend:
+          serviceName: alephium
+          servicePort: 12973

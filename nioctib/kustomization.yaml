@@ -8,3 +8,5 @@ resources:
   - btc-rpc-explorer-deployment.yaml
   - kiali-ingress.yaml
   - tracing-ingress.yaml
+  - grafana-ingress.yaml
+  - alephium-deployment.yaml

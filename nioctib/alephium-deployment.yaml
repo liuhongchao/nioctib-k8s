@@ -1,0 +1,269 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: alephium
+    version: 0.7.5-M
+  name: alephium
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: alephium
+  template:
+    metadata:
+      labels:
+        app: alephium
+      name: alephium
+    spec:
+      containers:
+      - args:
+        env:
+        - name: JAVA_OPTS
+          value: -Xms256m -Xmx3072m
+        image: liuhongchao/alephium:b392b7b5ff6480429a80b6288a39f777b8f0f378
+        imagePullPolicy: Always
+        name: alephium
+        command: ["/usr/bin/sh","-c", "cp /tmp/.alephium/* .alephium; java -jar /alephium.jar"]
+        volumeMounts:
+          - mountPath: "/alephium-home/.alephium"
+            name: alephium-home
+          - mountPath: "/tmp/.alephium/"
+            name: alephium-configs
+#        resources:
+#          limits:
+#            cpu: "1"
+#            memory: 3G
+#          requests:
+#            memory: 1500M
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext:
+        runAsUser: 65534
+        fsGroup: 65534
+      terminationGracePeriodSeconds: 30
+      volumes:
+        - name: alephium-home
+          persistentVolumeClaim:
+            claimName: alephium-blockchain-pvc-claim
+        - name: alephium-configs
+          configMap:
+            name: alephium-configs
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: alephium
+spec:
+  selector:
+    app: alephium
+  ports:
+    - name: http
+      protocol: TCP
+      port: 12973
+      targetPort: 12973
+    - name: ws
+      protocol: TCP
+      port: 11973
+      targetPort: 11973
+    - name: p2p
+      protocol: TCP
+      port: 9973
+      targetPort: 9973
+  type: ClusterIP
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: alephium-blockchain-pvc-claim
+  namespace: bitcoin
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: alephium-configs
+  namespace: bitcoin
+data:
+  network.conf: |
+    alephium {
+      # Alephium's blockchain is sharded, which can be hosted by a single node or multiple nodes
+      # We use clique to refer to the set of nodes that are maintaining one copy of Alephium's blockchain
+      # When the group number is n, the number of chains is n * n, and the whole blockchain can be hosted
+      # on m nodes as long as n % m == 0. Each node is called a broker, with id ranging from 0 to m-1.
+      # For example, if broker.groups == 4, then the blockchain can run on 1, 2, or 4 brokers.
+      # Where there are 4 brokers, the ids of the brokers are 0, 1, 2, 3.
+      # The broker with id 0 is the master broker which will coordinate the bootstrap of the whole clique
+      broker {
+        # The id of the broker in the clique, ranging from 0 to broker-num-1
+        broker-id = 0
+
+        # The number of broker in the clique, assert(groups % broker-num == 0)
+        broker-num = 1
+
+        # The number of groups, which is a consensus constant of the network, and should not be changed.
+        # Testnet and Mainnet may use different values though
+        groups = 4
+      }
+
+      consensus {
+        block-target-time = 64 seconds
+        num-zeros-at-least-in-hash = 18
+      }
+    }
+
+  system.conf: |
+    alephium {
+        consensus {
+          tips-prune-interval = 100
+          block-cache-capacity-per-chain = 25
+        }
+      
+        mining {
+          nonce-step = 10000
+          batch-delay = 0 milli
+        }
+      
+        network {
+          max-outbound-connections-per-group = 10
+          max-inbound-connections-per-group = 40
+      
+          # The frequency at which peers will ping each other to check for liveness.
+          ping-frequency = 300 second
+      
+          # Timeout for establish a connection with peers
+          retry-timeout = 30 second
+      
+          # Size of the outbound TCP buffer (in bytes).
+          connection-buffer-capacity-in-byte = 100000000
+      
+          upnp {
+            # Enable UPNnP port forwarding (only works with UPnP compatible routers).
+            # Not helpful when you run the node in cloud
+            enabled = true
+          }
+      
+          # The interface to which the TCP and UPD servers will be bound. (use 0.0.0.0 for all interfaces)
+          bind-address = "0.0.0.0:9973"
+      
+          # Optional public address for the other nodes to find you
+          # If the external address is not set and UPnP works, you will get your external address via your IGD
+          # If the external address is set and UPnP is enable, UPnP will be ignored
+          external-address = null
+      
+          # This is the address for the other nodes of your clique to connect to you
+          # For example, your clique has 2 nodes in a same LAN, then your 2 nodes can use private addresses to connect to each other
+          internal-address  = "127.0.0.1:9973"
+      
+          # Each clique has a master node with brokerId == 0, of which the internal-address is the coordinator-address
+          coordinator-address    = "127.0.0.1:9973"
+      
+          rest-port = 12973
+          ws-port = 11973
+        }
+      
+        discovery {
+          peers-per-group = 16
+          scan-max-per-group = 8
+          scan-frequency = 90.seconds
+          scan-fast-frequency = 5.seconds
+          neighbors-per-group = 8
+        }
+      
+        mempool {
+          tx-pool-capacity = 1000
+          tx-max-number-per-block = 1000
+        }
+      
+        api {
+          network-interface = "127.0.0.1"
+          blockflow-fetch-max-age = 30 minutes
+          ask-timeout = 5 seconds
+        }
+      
+        wallet {
+          port = 15973
+          secret-dir = ${HOME}"/.alephium-wallets"
+          locking-timeout = 10 minutes
+        }
+      }
+      
+      akka {
+        loglevel = "DEBUG"
+        loggers = ["akka.event.slf4j.Slf4jLogger"]
+        logging-filter = "akka.event.slf4j.Slf4jLoggingFilter"
+      
+        jvm-shutdown-hooks = off
+      
+        io.tcp.register-timeout = 1m
+      
+        actor {
+          default-dispatcher {
+            executor = "fork-join-executor"
+            fork-join-executor {
+              parallelism-factor = 0.5
+            }
+            throughput = 1
+          }
+      
+          mining-dispatcher {
+            type = Dispatcher
+            executor = "fork-join-executor"
+            fork-join-executor {
+              parallelism-factor = 0.5
+            }
+            throughput = 1
+          }
+      
+          guardian-supervisor-strategy = "org.alephium.util.DefaultStrategy"
+        }
+      
+        http {
+          server {
+            websocket {
+              periodic-keep-alive-mode = pong
+              periodic-keep-alive-max-idle = 30 seconds
+            }
+      
+            socket-options {
+              so-reuse-address = true
+            }
+          }
+        }
+      }
+
+  user.conf: |
+    alephium.network.network-type = "testnet"
+    alephium.discovery.bootstrap = ["3.129.43.161:9973", "18.117.81.58:9973"]
+
+    alephium.api.network-interface = "0.0.0.0"
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: alephium-nioctib-tech-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/issuer: "letsencrypt-prod"
+spec:
+  tls:
+  - hosts:
+    - alephium.nioctib.tech
+    secretName: alephium-nioctib-tech-it-tls
+  rules:
+  - host: alephium.nioctib.tech
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: alephium
+          servicePort: 12973
