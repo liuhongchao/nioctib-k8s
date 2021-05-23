@@ -248,7 +248,7 @@ data:
 
   user.conf: |
     alephium.network.network-type = "testnet"
-    alephium.discovery.bootstrap = ["3.129.43.161:9973", "18.117.81.58:9973"]
+    alephium.discovery.bootstrap = ["3.143.238.45:9973", "3.138.157.27:9973"]
 
     alephium.api.network-interface = "0.0.0.0"
 ---
