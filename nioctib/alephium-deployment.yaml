@@ -26,7 +26,7 @@ spec:
         env:
         - name: JAVA_OPTS
           value: -Xms256m -Xmx3072m
-        image: liuhongchao/alephium:b64148bff3aab9cf2fb2697833f4854d48c8ca0
+        image: liuhongchao/alephium:b64148bff3aab9cf2fb2697833f4854d48c8ca08
         imagePullPolicy: Always
         name: alephium
         command: ["/usr/bin/sh","-c", "cp /tmp/.alephium/* .alephium; java -jar /alephium.jar"]
