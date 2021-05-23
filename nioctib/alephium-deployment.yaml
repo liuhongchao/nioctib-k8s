@@ -11,12 +11,12 @@ spec:
     matchLabels:
       app: alephium
   template:
-    annotations:
-      prometheus.io/path: /metrics
-      prometheus.io/port: "12973"
-      prometheus.io/scheme: http
-      prometheus.io/scrape: "true"
     metadata:
+      annotations:
+        prometheus.io/path: /metrics
+        prometheus.io/port: "12973"
+        prometheus.io/scheme: http
+        prometheus.io/scrape: "true"
       labels:
         app: alephium
       name: alephium
