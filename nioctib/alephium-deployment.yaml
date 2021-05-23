@@ -11,6 +11,11 @@ spec:
     matchLabels:
       app: alephium
   template:
+    annotations:
+      prometheus.io/path: /metrics
+      prometheus.io/port: "12973"
+      prometheus.io/scheme: http
+      prometheus.io/scrape: "true"
     metadata:
       labels:
         app: alephium
@@ -21,7 +26,7 @@ spec:
         env:
         - name: JAVA_OPTS
           value: -Xms256m -Xmx3072m
-        image: liuhongchao/alephium:51a4d0126567c89016b4ce3ab5f6e7eb151dec40
+        image: liuhongchao/alephium:b64148bff3aab9cf2fb2697833f4854d48c8ca0
         imagePullPolicy: Always
         name: alephium
         command: ["/usr/bin/sh","-c", "cp /tmp/.alephium/* .alephium; java -jar /alephium.jar"]
