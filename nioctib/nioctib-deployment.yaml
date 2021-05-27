@@ -85,7 +85,7 @@ spec:
     - nioctib.tech
     secretName: nioctib-tech-it-tls
   rules:
-  - host: nioctib.tech
+  - host: nioctib.tech   # For this to work, A record needs to be created in the DNS service
     http:
       paths:
       - path: /

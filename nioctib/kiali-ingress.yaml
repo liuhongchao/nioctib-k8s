@@ -26,6 +26,6 @@ metadata:
   namespace: istio-system
 spec:
   type: ExternalName
-  externalName: kiali.istio-system.svc.cluster.local
+  externalName: kiali.istio-system.svc.cluster.local  # For this to work, A record needs to be created in the DNS service
   ports:
     - port: 20001

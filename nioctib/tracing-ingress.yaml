@@ -8,7 +8,7 @@ metadata:
 spec:
   tls:
   - hosts:
-    - tracing.nioctib.tech
+    - tracing.nioctib.tech  # For this to work, A record needs to be created in the DNS service
     secretName: tracing-nioctib-tech-it-tls
   rules:
   - host: tracing.nioctib.tech

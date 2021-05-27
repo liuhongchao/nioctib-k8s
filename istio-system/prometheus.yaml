@@ -1,5 +1,5 @@
 # PVC to persist the grafana data (dashboard, etc)
-# This is mounted to /var/lib/grafana
+# This is mounted to /data
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:

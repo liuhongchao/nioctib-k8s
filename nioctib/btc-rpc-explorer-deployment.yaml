@@ -65,7 +65,7 @@ metadata:
 spec:
   tls:
   - hosts:
-    - explorer.nioctib.tech
+    - explorer.nioctib.tech # For this to work, A record needs to be created in the DNS service
     secretName: explorer-nioctib-tech-it-tls
   rules:
   - host: explorer.nioctib.tech

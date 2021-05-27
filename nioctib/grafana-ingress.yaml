@@ -11,7 +11,7 @@ spec:
     - grafana.nioctib.tech
     secretName: grafana-nioctib-tech-it-tls
   rules:
-  - host: grafana.nioctib.tech
+  - host: grafana.nioctib.tech  # For this to work, A record needs to be created in the DNS service
     http:
       paths:
       - path: /
