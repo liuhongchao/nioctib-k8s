@@ -1,0 +1,14 @@
+# PVC to persist the grafana data (dashboard, etc)
+# This is mounted to /var/lib/grafana
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: prometheus-pvc-claim
+  namespace: istio-system
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
