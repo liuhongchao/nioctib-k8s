@@ -26,7 +26,7 @@ spec:
         env:
         - name: JAVA_OPTS
           value: -Xms256m -Xmx3072m
-        image: liuhongchao/alephium:bd77b67a0bdee10cd81775fc584ea84c95032351
+        image: liuhongchao/alephium:0ce02a1128cfddf4857c227c7fa5abefbb02a412
         imagePullPolicy: Always
         name: alephium
         volumeMounts:
