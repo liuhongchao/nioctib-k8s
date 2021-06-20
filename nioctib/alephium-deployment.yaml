@@ -26,14 +26,15 @@ spec:
         env:
         - name: JAVA_OPTS
           value: -Xms256m -Xmx3072m
-        image: liuhongchao/alephium:0d6e56d1531813fb3eac56fe531350f9f58e8e20
+        image: liuhongchao/alephium:28a3386c9bb233485ea1c272223194176dc1439e
         imagePullPolicy: Always
         name: alephium
         volumeMounts:
           - mountPath: "/alephium-home/.alephium"
             name: alephium-home
-          - mountPath: "/tmp/.alephium/"
+          - mountPath: "/alephium-home/.alephium/user.conf"
             name: alephium-configs
+            subPath: user.conf
 #        resources:
 #          limits:
 #            cpu: "1"
@@ -100,7 +101,7 @@ metadata:
 data:
   user.conf: |
     alephium.network.network-type = "testnet"
-    alephium.discovery.bootstrap = ["3.143.238.45:9973", "3.138.157.27:9973"]
+    alephium.discovery.bootstrap = ["3.143.211.73:9973", "18.217.136.49:9973"]
 
     alephium.api.network-interface = "0.0.0.0"
 ---
