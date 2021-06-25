@@ -101,7 +101,7 @@ metadata:
 data:
   user.conf: |
     alephium.network.network-type = "testnet"
-    alephium.discovery.bootstrap = ["3.143.211.73:9973", "18.217.136.49:9973"]
+    alephium.discovery.bootstrap = ["3.15.16.60:9973", "18.222.24.159:9973"]
 
     alephium.api.network-interface = "0.0.0.0"
 ---
