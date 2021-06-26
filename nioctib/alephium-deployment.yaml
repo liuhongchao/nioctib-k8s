@@ -6,7 +6,7 @@ metadata:
     version: 0.7.5-M
   name: alephium
 spec:
-  replicas: 0
+  replicas: 1
   selector:
     matchLabels:
       app: alephium
