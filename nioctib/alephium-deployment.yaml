@@ -22,7 +22,7 @@ spec:
       name: alephium
     spec:
       containers:
-      - command: ["sleep","infinity"]
+      - args:
         env:
         - name: JAVA_OPTS
           value: -Xms256m -Xmx3072m
