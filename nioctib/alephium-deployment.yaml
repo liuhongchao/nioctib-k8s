@@ -22,12 +22,12 @@ spec:
       name: alephium
     spec:
       containers:
-      - command: ['sleep', 'infinity']
-        # args:
+      # command: ['sleep', 'infinity']
+      - args:
         env:
         - name: JAVA_OPTS
           value: -Xms256m -Xmx3072m
-        image: liuhongchao/alephium:db58d00d9383918cc5cd0e998d43fbe351fea69e
+        image: liuhongchao/alephium:0d3017f95bf0c2837e968656e8b7083278354e5d
         imagePullPolicy: Always
         name: alephium
         volumeMounts:
@@ -102,7 +102,7 @@ metadata:
 data:
   user.conf: |
     alephium.network.network-type = "testnet"
-    alephium.discovery.bootstrap = ["18.221.19.228:9973", "3.142.153.145:9973"]
+    alephium.discovery.bootstrap = ["3.134.244.247:9973", "18.116.66.76:9973"]
 
     alephium.api.network-interface = "0.0.0.0"
 ---
