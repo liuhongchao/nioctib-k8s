@@ -205,7 +205,10 @@ spec:
       name: explorer
     spec:
       containers:
-      - args:
+      - command:
+          - /app/bin/explorer-backend
+          - -Ddb.db.host=postgres
+          - -Dblockflow.host=alephium
         env:
         - name: JAVA_OPTS
           value: -Xms256m -Xmx3072m
