@@ -147,7 +147,7 @@ spec:
           image: postgres
           volumeMounts:
             - name: explorer-postgres-data
-              mountPath: /var/lib/postgresql/data
+              mountPath: /data/
           env:
             - name: POSTGRES_USER
               value: postgres
@@ -155,6 +155,8 @@ spec:
               value: postgres
             - name: POSTGRES_DB
               value: explorer
+            - name: PGDATA
+              value: /data/pgdata
       volumes:
         - name: explorer-postgres-data
           persistentVolumeClaim:
@@ -216,9 +218,9 @@ spec:
         env:
         - name: JAVA_OPTS
           value: -Xms256m -Xmx3072m
-        image: liuhongchao/explorer:0a95bc0b5a226c6c1faa093be7f9d3be66e5065d
+        image: liuhongchao/explorer:11ce6193bf0e5822a740f6f0f7f50492711710c5
         imagePullPolicy: Always
-        name: explorer-forntend
+        name: explorer-frontend
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
       dnsPolicy: ClusterFirst
