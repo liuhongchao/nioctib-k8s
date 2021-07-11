@@ -52,7 +52,7 @@ spec:
         env:
         - name: REACT_APP_BACKEND_URL
           value: https://alephium.nioctib.tech/api
-        image: liuhongchao/explorer:8b1c1a99477c7545db67ecfd44c62bbef294cf34
+        image: liuhongchao/explorer:b535cae1adbe9f92b644a68a9f3c961947b4125c
         imagePullPolicy: Always
         name: explorer-frontend
         terminationMessagePath: /dev/termination-log
