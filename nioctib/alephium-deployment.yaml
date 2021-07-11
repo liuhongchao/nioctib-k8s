@@ -21,12 +21,11 @@ spec:
       name: alephium
     spec:
       containers:
-      # command: ['sleep', 'infinity']
-      - args:
+      - command: ['sleep', 'infinity'] #args:
         env:
         - name: JAVA_OPTS
           value: -Xms256m -Xmx3072m
-        image: liuhongchao/alephium:0d3017f95bf0c2837e968656e8b7083278354e5d
+        image: alephium/alephium:0.8.5
         imagePullPolicy: Always
         name: alephium
         volumeMounts:
@@ -38,8 +37,11 @@ spec:
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
       - command:
-          - /app/bin/explorer-backend
-          - -Ddb.db.host=postgres
+          #- /app/bin/explorer-backend
+          #- -Ddb.db.host=postgres
+          #- -Dexplorer.host=0.0.0.0
+          - sleep
+          - infinity
         env:
         - name: JAVA_OPTS
           value: -Xms256m -Xmx3072m
@@ -51,8 +53,8 @@ spec:
       - args:
         env:
         - name: REACT_APP_BACKEND_URL
-          value: https://alephium.nioctib.tech/api
-        image: liuhongchao/explorer:b535cae1adbe9f92b644a68a9f3c961947b4125c
+          value: https://alephium.nioctib.tech
+        image: liuhongchao/explorer:59613c637d9e4b8af6f675e03985374cb80c08a1
         imagePullPolicy: Always
         name: explorer-frontend
         terminationMessagePath: /dev/termination-log
@@ -144,7 +146,15 @@ spec:
         backend:
           serviceName: alephium
           servicePort: 12973
-      - path: /api
+      - path: /blocks
+        backend:
+          serviceName: alephium
+          servicePort: 9090
+      - path: /transactions
+        backend:
+          serviceName: alephium
+          servicePort: 9090
+      - path: /addresses
         backend:
           serviceName: alephium
           servicePort: 9090
