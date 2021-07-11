@@ -93,6 +93,10 @@ spec:
       protocol: TCP
       port: 3000
       targetPort: 3000
+    - name: explorer-backend
+      protocol: TCP
+      port: 9090
+      targetPort: 9090
   type: ClusterIP
 ---
 apiVersion: v1
@@ -136,10 +140,18 @@ spec:
   - host: alephium.nioctib.tech
     http:
       paths:
-      - path: /
+      - path: /docs
         backend:
           serviceName: alephium
           servicePort: 12973
+      - path: /explorer
+        backend:
+          serviceName: alephium
+          servicePort: 3000
+      - path: /
+        backend:
+          serviceName: alephium
+          servicePort: 9090
 ---
 apiVersion: apps/v1
 kind: StatefulSet
