@@ -52,7 +52,7 @@ spec:
         env:
         - name: JAVA_OPTS
           value: -Xms256m -Xmx3072m
-        image: liuhongchao/explorer:e718590fd868f019340ce0f67edbbbbb6b5e80ae
+        image: liuhongchao/explorer:8b1c1a99477c7545db67ecfd44c62bbef294cf34
         imagePullPolicy: Always
         name: explorer-frontend
         terminationMessagePath: /dev/termination-log
