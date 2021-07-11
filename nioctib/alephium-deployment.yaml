@@ -50,8 +50,8 @@ spec:
         terminationMessagePolicy: File
       - args:
         env:
-        - name: JAVA_OPTS
-          value: -Xms256m -Xmx3072m
+        - name: REACT_APP_BACKEND_URL
+          value: explorer-api.alephium.nioctib.tech
         image: liuhongchao/explorer:8b1c1a99477c7545db67ecfd44c62bbef294cf34
         imagePullPolicy: Always
         name: explorer-frontend
