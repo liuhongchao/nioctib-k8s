@@ -21,7 +21,8 @@ spec:
       name: alephium
     spec:
       containers:
-      - command: ['sleep', 'infinity'] #args:
+      # command: ['sleep', 'infinity']
+      - args:
         env:
         - name: JAVA_OPTS
           value: -Xms256m -Xmx3072m
@@ -37,11 +38,11 @@ spec:
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
       - command:
-          #- /app/bin/explorer-backend
-          #- -Ddb.db.host=postgres
-          #- -Dexplorer.host=0.0.0.0
-          - sleep
-          - infinity
+          - /app/bin/explorer-backend
+          - -Ddb.db.host=postgres
+          - -Dexplorer.host=0.0.0.0
+          # - sleep
+          # - infinity
         env:
         - name: JAVA_OPTS
           value: -Xms256m -Xmx3072m
