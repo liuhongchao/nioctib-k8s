@@ -25,7 +25,7 @@ spec:
         env:
         - name: JAVA_OPTS
           value: -Xms256m -Xmx3072m
-        image: alephium/alephium:0.8.5
+        image: liuhongchao/alephium:0.8.5
         imagePullPolicy: Always
         name: alephium
         volumeMounts:
@@ -192,7 +192,7 @@ spec:
             - name: POSTGRES_DB
               value: explorer
             - name: PGDATA
-              value: /data/pgdata
+              value: /data/pgdata2
       volumes:
         - name: explorer-postgres-data
           persistentVolumeClaim:
